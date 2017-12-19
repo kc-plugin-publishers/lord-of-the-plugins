@@ -32,7 +32,7 @@ class Plugininfo:
         #ET.dump(tree)
         self.versionElement = self.findElement("version") #there can be many, for now we select the first one
         self.name = self.findText("name")
-        self.shortDescription = self.findText("shortDescription")
+        #self.shortDescription = self.findText("shortDescription")
         
         # use the first "version" element
         self.zipFileSource = self.findText("zipFileSource", root=self.versionElement)
