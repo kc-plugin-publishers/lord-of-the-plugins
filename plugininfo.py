@@ -29,11 +29,16 @@ class Plugininfo:
         self.pluginInfoFile = infoFile
         tree = ET.parse(infoFile)
         self.root = tree.getroot()
-        #ET.dump(tree)
+        ET.dump(tree)
         self.versionElement = self.findElement("version") #there can be many, for now we select the first one
         self.name = self.findText("name")
         #self.shortDescription = self.findText("shortDescription")
-        
+        self.deleteDir = None
+        print("DELETEDIR ELEMENT: ")
+        print(self.findElement("deleteDir"))
+        if self.findElement("deleteDir") is not None:
+            self.deleteDir = self.findText("deleteDir").strip('/\\')
+            print("found deleteDir " + self.deleteDir)
         # use the first "version" element
         self.zipFileSource = self.findText("zipFileSource", root=self.versionElement)
         self.fileSources = self.findallTexts("source", root=self.versionElement)
@@ -45,6 +50,9 @@ class Plugininfo:
     def getName(self):
         return self.name
     
+    def getDeleteDirs(self):
+        return [self.deleteDir]
+    
     def getSourceFiles(self):
         return self.fileSources
     
@@ -52,7 +60,8 @@ class Plugininfo:
         sourceDestPairs = []
         elements = self.findallElements("file", self.versionElement)
         for f in elements:
-            sourceDestPairs.append( (f.find("source").text, f.find("destination").text) )
+            dest = f.find("destination").text.strip('/\\')
+            sourceDestPairs.append( (f.find("source").text.strip('/\\'), dest) )
         return sourceDestPairs
         
     def getZipFile(self):

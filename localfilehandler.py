@@ -32,7 +32,14 @@ class LocalFileHandler:
         
 
     def uninstallPlugin(self, plugininfo):
-        print("uninstall TBD")
+        import shutil
+        print("UNINSTALL")
+        print(plugininfo.getDeleteDirs()[0])
+        if plugininfo.getDeleteDirs()[0]:
+            deleteDir = self.pluginsDir + '/' + plugininfo.getDeleteDirs()[0]
+            print("Uninstalling, delete dir: " + deleteDir)
+            if os.path.exists(deleteDir):
+                shutil.rmtree(deleteDir)
     
     def installFile(self, destPath, fileObject):
         wholeDestPath = self.pluginsDir + "/" + destPath

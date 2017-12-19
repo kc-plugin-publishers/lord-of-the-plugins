@@ -78,6 +78,7 @@ class LordOfThePluginsAction():
         print(sourceDestList)
         fileHandler = LocalFileHandler(self.pluginsDir)
         fileHandler.uninstallPlugin(pluginInfo)
+        
         for sourceFileName, destPath in sourceDestList:
             print(sourceFileName + destPath)
             installableFile = zipFileHandler.getFile(sourceFileName)
