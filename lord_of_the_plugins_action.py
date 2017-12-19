@@ -1,5 +1,5 @@
 # Every file in this package is imported so that no file is read runtime.
-# This makes on-the-fly deleting/installing this package with itself possible.
+# This should make on-the-fly deleting/installing this package with itself possible.
 from downloader import Downloader             #downloads files behind urls
 from zipfilehandler import ZipFileHandler     #encapsulates a downloaded .zip file
 from plugininfo import Plugininfo             #encapsulates a .plugininfo file
@@ -12,10 +12,12 @@ class LordOfThePluginsAction():
         self.category = "Metaplugin"
         self.description = "A plugin manager which installs, updates and removes plugins"
         
-        self.configFileName = ".lord_of_the_plugins.ini" #in the home dir
-        self.masterListUrl = "https://github.com/kc-plugin-publishers/kc-plugins-master-list/archive/master.zip" #can be overriden in ini conf file
-        self.pluginsDir = "~/.test_plugins_dir" #overriden in ini conf file
-        self.pluginToInstall = "SimplePluginExample"
+        #------USE THE CONFIG FILE TO CONFIGURE PLUGIN LIST URL AND TO-BE-INSTALLED PLUGIN--------
+        self.configFileName = "lord_of_the_plugins.ini" # FILE IN CWD OR GIVE THE WHOLE PATH
+        
+        self.masterListUrl = "https://github.com/kc-plugin-publishers/kc-plugins-master-list/archive/master.zip" #can be overriden in ini conf file, see above
+        self.pluginsDir = "~/.test_plugins_dir" # see above
+        self.pluginToInstall = "SimplePluginExample" # see above
         
     def Run(self):
         print("Running LordOfThePlugins")
@@ -29,10 +31,11 @@ class LordOfThePluginsAction():
         
     def initConfig(self):
         from os.path import expanduser
+        from os.path import abspath
         import ConfigParser
         
-        configFile = expanduser("~") + "/" + self.configFileName
-        print(configFile)
+        configFile = self.configFileName
+        print("Read ini file: "+abspath(configFile))
         config = ConfigParser.RawConfigParser()
         config.read(configFile)
         if config.has_option("default","masterListUrl") and config.get("default", "masterListUrl"):

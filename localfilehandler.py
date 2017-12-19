@@ -27,7 +27,8 @@ import os
 class LocalFileHandler:
 
     def __init__(self, pluginsDir):
-        self.pluginsDir = pluginsDir
+        self.pluginsDir = os.path.expanduser(pluginsDir)
+        print("Plugins directory: "+self.pluginsDir)
         
 
     def uninstallPlugin(self, plugininfo):
