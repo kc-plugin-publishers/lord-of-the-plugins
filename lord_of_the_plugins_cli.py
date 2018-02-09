@@ -8,11 +8,19 @@ from backend.plugininfocollection import PlugininfoCollection   #keeps all plugi
 
 class LordOfThePluginsCli():
     """The command line interface main class for the Plugin Manager."""
-    def __init__(self):
+    def __init__(self, configFileName):
         #def defaults(self):
         
         #------USE THE CONFIG FILE TO CONFIGURE PLUGIN LIST URL AND TO-BE-INSTALLED PLUGIN--------
-        self.configFileName = "lord_of_the_plugins.ini" # FILE IN CWD OR GIVE THE WHOLE PATH
+        if (configFileName):
+            self.configFileName = configFileName
+        else:
+            self.configFileName = "lord_of_the_plugins.ini" # FILE IN CWD OR GIVE THE WHOLE PATH
+            import os
+            import sys
+            cwd = os.path.dirname(os.path.abspath(__file__))
+            self.configFileName = cwd + "/lord_of_the_plugins.ini"
+            
         
         self.masterListUrl = "https://github.com/kc-plugin-publishers/kc-plugins-master-list/archive/master.zip" #can be overriden in ini conf file, see above
         self.pluginsDir = "~/.test_plugins_dir" # see above
@@ -68,5 +76,5 @@ class LordOfThePluginsCli():
             
             
 if __name__ == "__main__":
-    cli = LordOfThePluginsCli()
+    cli = LordOfThePluginsCli(None)
     cli.Run()
