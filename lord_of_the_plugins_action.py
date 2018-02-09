@@ -1,9 +1,9 @@
-from downloader import Downloader                       #downloads files behind urls
-from zipfilehandler import ZipFileHandler               #encapsulates a downloaded .zip file
-from plugininfo import Plugininfo                       #encapsulates a .plugininfo file
-from localfilehandler import LocalFileHandler           #saves/removes local files
-from confighandler import ConfigHandler                 #reads, writes and stores configuration
-from plugininfocollection import PlugininfoCollection   #keeps all plugininfos from a repository
+from backend.downloader import Downloader                       #downloads files behind urls
+from backend.zipfilehandler import ZipFileHandler               #encapsulates a downloaded .zip file
+from backend.plugininfo import Plugininfo                       #encapsulates a .plugininfo file
+from backend.localfilehandler import LocalFileHandler           #saves/removes local files
+from backend.confighandler import ConfigHandler                 #reads, writes and stores configuration
+from backend.plugininfocollection import PlugininfoCollection   #keeps all plugininfos from a repository
 
 class LordOfThePluginsAction():
     def __init__(self):
