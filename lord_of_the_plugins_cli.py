@@ -5,12 +5,11 @@ from backend.localfilehandler import LocalFileHandler           #saves/removes l
 from backend.confighandler import ConfigHandler                 #reads, writes and stores configuration
 from backend.plugininfocollection import PlugininfoCollection   #keeps all plugininfos from a repository
 
+
 class LordOfThePluginsCli():
+    """The command line interface main class for the Plugin Manager."""
     def __init__(self):
         #def defaults(self):
-        self.name = "LordOfThePlugins"
-        self.category = "Metaplugin"
-        self.description = "A plugin manager which installs, updates and removes plugins"
         
         #------USE THE CONFIG FILE TO CONFIGURE PLUGIN LIST URL AND TO-BE-INSTALLED PLUGIN--------
         self.configFileName = "lord_of_the_plugins.ini" # FILE IN CWD OR GIVE THE WHOLE PATH
