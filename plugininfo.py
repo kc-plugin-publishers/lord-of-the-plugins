@@ -29,7 +29,7 @@ class Plugininfo:
         self.pluginInfoFile = infoFile
         tree = ET.parse(infoFile)
         self.root = tree.getroot()
-        ET.dump(tree)
+        #ET.dump(tree)
         self.versionElement = self.findElement("version") #there can be many, for now we select the first one
         self.name = self.findText("name")
         #self.shortDescription = self.findText("shortDescription")

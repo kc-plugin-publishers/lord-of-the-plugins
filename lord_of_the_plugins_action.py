@@ -1,9 +1,9 @@
-# Every file in this package is imported so that no file is read runtime.
-# This should make on-the-fly deleting/installing this package with itself possible.
-from downloader import Downloader             #downloads files behind urls
-from zipfilehandler import ZipFileHandler     #encapsulates a downloaded .zip file
-from plugininfo import Plugininfo             #encapsulates a .plugininfo file
-from localfilehandler import LocalFileHandler #saves/removes local files
+from downloader import Downloader                       #downloads files behind urls
+from zipfilehandler import ZipFileHandler               #encapsulates a downloaded .zip file
+from plugininfo import Plugininfo                       #encapsulates a .plugininfo file
+from localfilehandler import LocalFileHandler           #saves/removes local files
+from confighandler import ConfigHandler                 #reads, writes and stores configuration
+from plugininfocollection import PlugininfoCollection   #keeps all plugininfos from a repository
 
 class LordOfThePluginsAction():
     def __init__(self):
@@ -25,38 +25,21 @@ class LordOfThePluginsAction():
         self.initConfig()
         
         downloader = Downloader()
-        masterListZip = downloader.retrieve(self.masterListUrl)
+        masterListZip = downloader.retrieve(self.config.masterListUrl)
         print(masterListZip)
         self.handleMasterList(masterListZip)
         
     def initConfig(self):
-        from os.path import expanduser
-        from os.path import abspath
-        import ConfigParser
-        
-        configFile = self.configFileName
-        print("Read ini file: "+abspath(configFile))
-        config = ConfigParser.RawConfigParser()
-        config.read(configFile)
-        if config.has_option("default","masterListUrl") and config.get("default", "masterListUrl"):
-            self.masterListUrl = config.get("default","masterListUrl")
-        
-        self.pluginsDir = expanduser("~") + "/.test_plugins_dir"
-        if config.has_option("default","pluginsDir") and config.get("default", "pluginsDir"):
-            self.pluginsDir = config.get("default","pluginsDir")
-            
-        if config.has_option("default", "pluginToInstall") and config.get("default", "pluginToInstall"):
-            self.pluginToInstall = config.get("default", "pluginToInstall")
-            
-        print(self.masterListUrl)
-        print(self.pluginsDir)
+        self.config = ConfigHandler(self.configFileName)
+        self.masterListUrl = self.config.masterListUrl
+        self.pluginsDir = self.config.pluginsDir
+        self.pluginToInstall = self.config.pluginToInstall
         
     #read and handle the zip file which has the plugininfo files
     def handleMasterList(self, masterListZip):   
         zipFileHandler = ZipFileHandler(masterListZip)
-        infoFilesList = zipFileHandler.getPlugininfoFileList()
-        
-        #return
+        infoCollection = PlugininfoCollection(zipFileHandler)
+        infoFilesList = infoCollection.getInfoFileNames()
         
         for infoFileName in infoFilesList:
             print(infoFileName)

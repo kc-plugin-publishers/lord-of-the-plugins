@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2017 Eeli Kaikkonen <email>
+# Copyright (c) 2018 <copyright holder> <email>
 # 
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation
@@ -22,22 +22,29 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 #
-import zipfile
 
-class ZipFileHandler:
-    def __init__(self, zipFileName):
-        self.zipFileObject = zipfile.ZipFile(zipFileName)
+from zipfilehandler import ZipFileHandler
 
-    def getFileNameList(self):
-        return self.zipFileObject.namelist()
+class PlugininfoCollection:
+    """Interface to all plugininfo files in one repository.
+    Is used to return lists, trees etc.
+    """
+    infoFileNames = []
+    
+    def __init__(self, zipFileHandler):
+        """Takes a zip file which is a plugininfo repository."""
+        self.zipFileHandler = zipFileHandler
+        
+        
+    def getInfoFileNames(self):
         fileList = []
-        allFiles = self.zipFileObject.namelist()
+        allFiles = self.zipFileHandler.getFileNameList()
         for fname in allFiles:
             print(fname)
             if fname.endswith(".plugininfo"):
                 fileList.append(fname)
-
         return fileList
     
-    def getFile(self, filename):
-        return self.zipFileObject.open(filename)
+    def getInfoTree(self):
+        # TODO
+        return "Info tree not implemented yet"
