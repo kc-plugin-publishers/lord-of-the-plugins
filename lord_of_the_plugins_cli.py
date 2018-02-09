@@ -5,7 +5,7 @@ from backend.localfilehandler import LocalFileHandler           #saves/removes l
 from backend.confighandler import ConfigHandler                 #reads, writes and stores configuration
 from backend.plugininfocollection import PlugininfoCollection   #keeps all plugininfos from a repository
 
-class LordOfThePluginsAction():
+class LordOfThePluginsCli():
     def __init__(self):
         #def defaults(self):
         self.name = "LordOfThePlugins"
@@ -69,5 +69,5 @@ class LordOfThePluginsAction():
             
             
 if __name__ == "__main__":
-    action = LordOfThePluginsAction()
-    action.Run()
+    cli = LordOfThePluginsCli()
+    cli.Run()
